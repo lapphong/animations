@@ -1,0 +1,20 @@
+android {
+    signingConfigs {
+        animsapp {
+            keyAlias 'animsapp'
+            keyPassword 'animsapp'
+            storeFile file('animsapp.jks')
+            storePassword 'animsapp'
+        }
+    }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        animsapp {
+            dimension 'version'
+            applicationId "com.animsapp.buzzlp"
+            signingConfig signingConfigs.animsapp
+        }
+    }
+}
