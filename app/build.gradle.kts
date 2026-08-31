@@ -36,6 +36,9 @@ android {
         targetSdk = 36
         versionCode = code
         versionName = name
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,6 +61,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        create("profile") {
+            initWith(getByName("debug"))
         }
     }
     compileOptions {
@@ -127,4 +133,13 @@ dependencies {
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
+
+    debugImplementation("com.example.counter:flutter_debug:1.0")
+    releaseImplementation("com.example.counter:flutter_release:1.0")
+    add("profileImplementation", "com.example.counter:flutter_profile:1.0")
+}
+
+configurations {
+    getByName("profileImplementation") {
+    }
 }
