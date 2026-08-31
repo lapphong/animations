@@ -84,8 +84,8 @@ android {
                     val versionName = variantOutput.versionName.get() // e.g 1.0.0
                     val versionCode = variantOutput.versionCode.get() // e.g 1
                     val flavorName = variant.flavorName ?: "default" // e.g. Free
-                    val buildType = variant.buildType // e. g. debug
-                    val variantName = variant.name // e. g. FreeDebug
+                    val buildType = variant.buildType // e.g. debug
+                    val variantName = variant.name // e.g. FreeDebug
 
                     //customize your app name by using variables
                     variantOutput.outputFileName = "${flavorName}_v${versionName}_${buildType}_${getDate()}.apk"
