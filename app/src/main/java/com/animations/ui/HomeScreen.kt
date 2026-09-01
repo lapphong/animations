@@ -33,7 +33,7 @@ fun HomeScreen(
     ) {
         GradientText("Animation App", modifier = Modifier.padding(bottom = 12.dp))
         if (counter.isNotBlank()) {
-            GradientText(counter, modifier = Modifier.padding(bottom = 12.dp))
+            GradientText(counter)
         }
         Routes.entries.forEach {
             GradientButton(
@@ -42,22 +42,20 @@ fun HomeScreen(
                 onClick = {
                     when (it) {
                         Routes.FLUTTER_COUNTER_DEMO -> {
-                            context.openFlutterScreen { data ->
-                                counter = data
+                            context.openFlutterScreen { result ->
+                                counter = result
                             }
                         }
 
                         Routes.SEND_DATA_TO_FLUTTER -> {
                             FlutterEngineManager.sendDataToFlutter("Data from Android Native, la la")
-                            context.openFlutterScreen { data ->
-                                counter = data
+                            context.openFlutterScreen { result ->
+                                counter = result
                             }
                         }
 
                         else -> {
-                            if (it.navKey != null) {
-                                onNavigate(it.navKey)
-                            }
+                            it.navKey?.let { key -> onNavigate(key) }
                         }
                     }
                 }

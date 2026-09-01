@@ -134,9 +134,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
 
-    debugImplementation("com.example.counter:flutter_debug:1.0")
-    releaseImplementation("com.example.counter:flutter_release:1.0")
-    add("profileImplementation", "com.example.counter:flutter_profile:1.0")
+    // Module flutter
+    debugImplementation(libs.flutter.debug)
+    releaseImplementation(libs.flutter.release)
+    add("profileImplementation", libs.flutter.profile)
 }
 
 configurations {

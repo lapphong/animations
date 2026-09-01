@@ -76,9 +76,7 @@ fun Context.openFlutterScreen(
     if (!FlutterEngineManager.isReady()) {
         return
     }
-    onResult?.let {
-        FlutterEngineManager.setResultListener(onResult)
-    }
+    onResult?.let { FlutterEngineManager.setResultListener(onResult) }
 
     val intent = FlutterActivity
         .withCachedEngine(FlutterEngineManager.ENGINE_ID)

@@ -90,34 +90,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            Text(
-              'You have pushed the button this many times:\n$_nativeMessage',
-              textAlign: TextAlign.center,
-            ),
-            InkWell(
-              onTap: sendData,
-              child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          sendData();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: .center,
+            children: [
+              const Text('You have pushed the button this many times'),
+              InkWell(
+                onTap: sendData,
+                child: Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
-            ),
-            if (_nativeMessage != null) ...[
-              const SizedBox(height: 16),
-              Text('From native: $_nativeMessage'),
+              if (_nativeMessage != null) ...[
+                const SizedBox(height: 16),
+                Text('From native: $_nativeMessage'),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
