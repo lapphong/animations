@@ -13,5 +13,6 @@ class App : Application(), DefaultLifecycleObserver {
 
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
+        FlutterEngineManager.destroy()
     }
 }
