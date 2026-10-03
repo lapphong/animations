@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_reactions/flutter_reactions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String? _nativeMessage;
+  FlutterReactionType? _flutterReactionType;
 
   static const channel = MethodChannel('com.animations/flutter');
 
@@ -81,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> sendData() async {
     await channel.invokeMethod(
       'sendDataToNative',
-      {'counter': 'Hello from Flutter, counter: $_counter'},
+      {'counter': 'Hello from Flutter, counter: $_counter\nreaction:${_flutterReactionType?.label}'},
     );
     if (mounted) {
       SystemNavigator.pop();
@@ -101,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(title: Text(widget.title)),
         body: Center(
           child: Column(
+            spacing: 16.0,
             mainAxisAlignment: .center,
             children: [
               const Text('You have pushed the button this many times'),
@@ -111,8 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
+              FlutterReactionButton(
+                value: _flutterReactionType,
+                onChanged: (value) {
+                  setState(() {
+                    _flutterReactionType = value;
+                  });
+                },
+              ),
               if (_nativeMessage != null) ...[
-                const SizedBox(height: 16),
                 Text('From native: $_nativeMessage'),
               ],
             ],

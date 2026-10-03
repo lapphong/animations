@@ -42,16 +42,12 @@ fun HomeScreen(
                 onClick = {
                     when (it) {
                         Routes.FLUTTER_COUNTER_DEMO -> {
-                            context.openFlutterScreen { result ->
-                                counter = result
-                            }
+                            context.openFlutterScreen { result -> counter = result }
                         }
 
                         Routes.SEND_DATA_TO_FLUTTER -> {
                             FlutterEngineManager.sendDataToFlutter("Data from Android Native, la la")
-                            context.openFlutterScreen { result ->
-                                counter = result
-                            }
+                            context.openFlutterScreen { result -> counter = result }
                         }
 
                         else -> {

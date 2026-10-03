@@ -11,25 +11,32 @@ plugins {
 
 apply(from = "signingConfigs.gradle")
 
+val versionPropsFile = file("version.properties")
+val versionProps = Properties().apply {
+    if (versionPropsFile.canRead()) {
+        versionPropsFile.inputStream().use { load(it) }
+    }
+}
+
+val isReleaseBuild: Boolean = (findProperty("bumpVersion") as String?)?.toBoolean()
+    ?: gradle.startParameter.taskNames.any { task ->
+        val t = task.lowercase()
+        t.contains("release") && (t.contains("assemble") || t.contains("bundle"))
+    }
+
+val name = "1.0.0"
+val currentVersionCode = versionProps.getProperty("VERSION_CODE")?.toIntOrNull() ?: 1
+val code = if (isReleaseBuild) currentVersionCode + 1 else currentVersionCode
+
+if (isReleaseBuild) {
+    versionProps["VERSION_CODE"] = code.toString()
+    versionProps["VERSION_NAME"] = name
+    versionPropsFile.writer().use { versionProps.store(it, null) }
+}
+
 android {
     namespace = "com.animations"
     compileSdk = 36
-
-    val versionPropsFile = file("version.properties")
-    val versionProps = Properties()
-    if (versionPropsFile.canRead()) {
-        versionProps.load(versionPropsFile.inputStream())
-    } else {
-        versionProps["VERSION_CODE"] = "0"
-    }
-
-    var code = 1
-    versionProps["VERSION_CODE"]?.let { code = it.toString().toInt() + 1 }
-    versionProps["VERSION_CODE"] = code.toString()
-
-    val name = "1.0.0"
-    versionProps["VERSION_NAME"] = name
-    versionProps.store(versionPropsFile.writer(), null)
 
     defaultConfig {
         minSdk = 26
@@ -37,7 +44,7 @@ android {
         versionCode = code
         versionName = name
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
