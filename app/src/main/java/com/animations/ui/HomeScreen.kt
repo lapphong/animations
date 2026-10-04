@@ -18,6 +18,7 @@ import com.animations.utils.FlutterEngineManager
 import com.animations.utils.openFlutterScreen
 import com.animations.widgets.GradientButton
 import com.animations.widgets.GradientText
+import com.animations.widgets.HeaderView
 
 @Composable
 fun HomeScreen(
@@ -31,7 +32,7 @@ fun HomeScreen(
         modifier.padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        GradientText("Animation App", modifier = Modifier.padding(bottom = 12.dp))
+        HeaderView("Animation App", leftIcon = 0)
         if (counter.isNotBlank()) {
             GradientText(counter)
         }

@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.animations.widgets.ToolBar
+import com.animations.widgets.HeaderView
 import com.carousel_slider.CarouselDefaults
 import com.carousel_slider.CarouselSlider
 
@@ -49,7 +49,7 @@ fun CarouselSliderDemo(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ToolBar(title = title, onBackPressed = onBackPressed)
+            HeaderView(title = title, onLeftClick = onBackPressed)
             Spacer(Modifier.height(32.dp))
             Text(
                 text = "Cover Flow",

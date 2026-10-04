@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.animations.nav.CarouselSliderDemoKey
@@ -68,7 +70,9 @@ fun AnimationApp() {
         }
     }
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets(0.dp)
+    ) { innerPadding ->
         NavDisplay(
             modifier = Modifier.padding(innerPadding),
             entries = navigationState.toEntries(entryProvider),

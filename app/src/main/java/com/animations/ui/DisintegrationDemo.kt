@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,14 +31,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.animations.widgets.GradientButton
+import com.animations.widgets.HeaderView
 import com.animations.widgets.ListTile
-import com.animations.widgets.ToolBar
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.disintegration.DisintegrationEffect
@@ -69,15 +71,18 @@ fun DisintegrationDemo(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(Brush.verticalGradient(listOf(Color(0xFF1A1A22), Color(0xFF0B0B0F))))
             .padding(horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ToolBar(
+        HeaderView(
             title = "Disintegration Demo",
-            onBackPressed = onBackPressed
+            onLeftClick = onBackPressed
         )
         GradientButton(
-            modifier = Modifier.widthIn(max = 250.dp),
+            modifier = Modifier
+                .widthIn(max = 250.dp)
+                .padding(vertical = 8.dp),
             text = "Open CarouselSlider Demo",
             onClick = { goToCarouselSlider("Data from DisintegrationDemo") },
         )
