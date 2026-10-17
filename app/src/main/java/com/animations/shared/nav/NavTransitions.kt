@@ -1,4 +1,4 @@
-package com.animations.nav
+package com.animations.shared.nav
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

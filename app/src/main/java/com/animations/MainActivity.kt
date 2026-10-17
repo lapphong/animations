@@ -12,23 +12,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.animations.models.OpenTo
-import com.animations.nav.CarouselSliderDemoKey
-import com.animations.nav.DisintegrationDemoKey
-import com.animations.nav.HomeKey
-import com.animations.nav.NavTransitions
-import com.animations.nav.Navigator
-import com.animations.nav.SlideDirection
-import com.animations.nav.SplashKey
-import com.animations.nav.enterTransition
-import com.animations.nav.exitTransition
-import com.animations.nav.navKey
-import com.animations.nav.predictiveExitTransition
-import com.animations.nav.rememberNavigationState
-import com.animations.nav.toEntries
+import com.animations.models.navKey
+import com.animations.shared.nav.CarouselSliderDemoKey
+import com.animations.shared.nav.DisintegrationDemoKey
+import com.animations.shared.nav.HomeKey
+import com.animations.shared.nav.NavTransitions
+import com.animations.shared.nav.Navigator
+import com.animations.shared.nav.SlideDirection
+import com.animations.shared.nav.SplashKey
+import com.animations.shared.nav.enterTransition
+import com.animations.shared.nav.exitTransition
+import com.animations.shared.nav.predictiveExitTransition
+import com.animations.shared.nav.rememberNavigationState
+import com.animations.shared.nav.toEntries
 import com.animations.ui.CarouselSliderDemo
 import com.animations.ui.DisintegrationDemo
 import com.animations.ui.HomeScreen
@@ -67,6 +68,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AnimationApp() {
+    val context = LocalContext.current
     val navigationState = rememberNavigationState(
         initialKey = SplashKey,
         rootKey = HomeKey,
@@ -77,7 +79,7 @@ fun AnimationApp() {
         entry<SplashKey> {
             SplashScreen(
                 onFinished = {
-                    val openTo = OpenTo.of(AppSettings.openTo).navKey()
+                    val openTo = OpenTo.of(AppSettings.openTo).navKey(context)
                     navigator.goBack()
                     openTo?.let(navigator::navigate)
                 }

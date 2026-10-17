@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
-import com.animations.nav.CarouselSliderDemoKey
-import com.animations.nav.DisintegrationDemoKey
+import com.animations.shared.nav.CarouselSliderDemoKey
+import com.animations.shared.nav.DisintegrationDemoKey
 import com.animations.utils.FlutterEngineManager
 import com.animations.utils.openFlutterScreen
 import com.animations.widgets.GradientButton

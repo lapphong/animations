@@ -1,4 +1,4 @@
-package com.animations.extensions
+package com.animations.shared.extensions
 
 import android.os.SystemClock
 import androidx.compose.foundation.background

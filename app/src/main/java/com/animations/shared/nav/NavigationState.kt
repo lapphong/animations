@@ -1,4 +1,4 @@
-package com.animations.nav
+package com.animations.shared.nav
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable

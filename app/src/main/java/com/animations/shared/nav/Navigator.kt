@@ -1,4 +1,4 @@
-package com.animations.nav
+package com.animations.shared.nav
 
 import androidx.navigation3.runtime.NavKey
 

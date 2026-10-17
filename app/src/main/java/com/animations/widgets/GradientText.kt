@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.animations.extensions.rememberAnimatedGradient
+import com.animations.shared.extensions.rememberAnimatedGradient
 
 @Composable
 fun GradientText(

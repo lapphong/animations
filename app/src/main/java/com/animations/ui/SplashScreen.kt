@@ -25,20 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.animations.R
-import com.animations.utils.ShortcutsUtils
 import com.animations.widgets.AppImage
 import com.animations.widgets.CenterBox
 import com.animations.widgets.CenterColumn
 import com.animations.widgets.ProgressBar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 private const val PROGRESS_TARGET = 0.99f
 private const val PROGRESS_DURATION_MS = 700
@@ -48,7 +44,6 @@ fun SplashScreen(
     modifier: Modifier = Modifier,
     onFinished: () -> Unit = {},
 ) {
-    val context = LocalContext.current
     val progress = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
@@ -57,12 +52,6 @@ fun SplashScreen(
             animationSpec = tween(PROGRESS_DURATION_MS, easing = LinearOutSlowInEasing)
         )
         onFinished()
-    }
-
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            ShortcutsUtils.createShortcut(context)
-        }
     }
 
     Box(modifier.fillMaxSize()) {

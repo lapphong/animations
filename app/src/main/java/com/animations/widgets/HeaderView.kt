@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.animations.R
-import com.animations.extensions.onClickNotRipple
+import com.animations.shared.extensions.onClickNotRipple
 
 @Composable
 fun HeaderView(
