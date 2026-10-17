@@ -133,65 +133,6 @@ private fun BackIcon(
     )
 }
 
-@Composable
-fun HeaderViewUninstall(
-    modifier: Modifier = Modifier,
-    @DrawableRes leftIcon: Int = R.drawable.ic_arrow_left,
-    centerTitle: Boolean = false,
-    onLeftClick: () -> Unit = {},
-    rightContent: @Composable RowScope.() -> Unit = {},
-    titleContent: @Composable RowScope.() -> Unit,
-) {
-    val rootModifier = modifier
-        .fillMaxWidth()
-        .statusBarsPadding()
-        .padding(start = 16.dp, top = 12.dp, end = 16.dp)
-        .heightIn(min = 30.dp)
-
-    if (centerTitle) {
-        Box(modifier = rootModifier) {
-            CenterRow(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth()
-                    .padding(horizontal = 34.dp),
-            ) {
-                titleContent()
-            }
-
-            if (leftIcon != 0) {
-                BackIcon(
-                    res = leftIcon,
-                    modifier = Modifier.align(Alignment.CenterStart),
-                    onClick = onLeftClick,
-                )
-            }
-
-            CenterRow(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                itemSpacing = 12.dp,
-            ) {
-                rightContent()
-            }
-        }
-    } else {
-        CenterRow(
-            modifier = rootModifier,
-            itemSpacing = 8.dp,
-        ) {
-            if (leftIcon != 0) {
-                BackIcon(res = leftIcon, onClick = onLeftClick)
-            }
-
-            titleContent()
-
-            CenterRow(itemSpacing = 12.dp) {
-                rightContent()
-            }
-        }
-    }
-}
-
 @Preview
 @Composable
 private fun PreviewHeaderView() {

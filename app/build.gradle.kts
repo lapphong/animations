@@ -36,23 +36,30 @@ if (isReleaseBuild) {
 
 android {
     namespace = "com.animations"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = code
         versionName = name
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+            abiFilters += listOf("x86_64", "armeabi-v7a", "arm64-v8a")
         }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+//    androidResources {
+//        localeFilters += listOf("en", "vi") // Include only supported locales to reduce app size
+//    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
+            isProfileable = true // Enable performance profiling for release builds
             resValue("string", "app_name", "animsapp")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -80,11 +87,13 @@ android {
     buildFeatures {
         compose = true
         resValues = true
+        buildConfig = true
     }
     lint {
         abortOnError = false
         checkReleaseBuilds = false
     }
+    bundle.language.enableSplit = false // Prevent language resources from being split into separate APKs
 
     //noinspection WrongGradleMethod
     androidComponents {
@@ -105,6 +114,11 @@ android {
                 }
         }
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    metricsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
 fun getDate(): String {
@@ -131,6 +145,9 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.timber)
+
+    // libs
     implementation(files("libs/disintegration-1.0.0.aar"))
     implementation(files("libs/carousel_slider-1.0.0.aar"))
 //    implementation(project(":disintegration"))
@@ -140,6 +157,9 @@ dependencies {
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
+
+    // Koin
+    implementation(libs.koin.androidx.compose)
 
     // Module flutter
     debugImplementation(libs.flutter.debug)
