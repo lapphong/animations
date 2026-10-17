@@ -18,20 +18,29 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 /**
  * Creates a navigation state that survives configuration changes and process death.
  *
- * @param startKey the initial top-level key (user exits the app from here)
+ * @param rootKey top-level key at the bottom of the stack; back from here exits the app.
  * @param topLevelKeys all top-level destinations for NavigationSuiteScaffold
+ * @param initialKey key sitting above rootKey from the first frame, e.g. a splash.
+ *   Seeding it here keeps the screen below from showing for one frame.
  */
 @Composable
 fun rememberNavigationState(
-    startKey: NavKey,
+    rootKey: NavKey,
     topLevelKeys: Set<NavKey>,
+    initialKey: NavKey? = null,
 ): NavigationState {
-    val topLevelStack = rememberNavBackStack(startKey)
-    val subStacks = topLevelKeys.associateWith { key -> rememberNavBackStack(key) }
+    val topLevelStack = rememberNavBackStack(rootKey)
+    val subStacks = topLevelKeys.associateWith { key ->
+        if (key == rootKey && initialKey != null) {
+            rememberNavBackStack(rootKey, initialKey)
+        } else {
+            rememberNavBackStack(key)
+        }
+    }
 
-    return remember(startKey, topLevelKeys) {
+    return remember(rootKey, topLevelKeys) {
         NavigationState(
-            startKey = startKey,
+            rootKey = rootKey,
             topLevelStack = topLevelStack,
             subStacks = subStacks,
         )
@@ -42,7 +51,7 @@ fun rememberNavigationState(
  * Holds the full navigation state: top-level stack + per-destination substacks.
  */
 class NavigationState(
-    val startKey: NavKey,
+    val rootKey: NavKey,
     val topLevelStack: NavBackStack<NavKey>,
     val subStacks: Map<NavKey, NavBackStack<NavKey>>,
 ) {

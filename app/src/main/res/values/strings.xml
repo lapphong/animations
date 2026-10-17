@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">animations</string>
+    <string name="disintegration">Disintegration</string>
+    <string name="carousel_slider">Carousel Slider</string>
+    <string name="flutter_screen">Flutter Screen</string>
+    <string name="loading">Loading…</string>
+    <string name="this_action_might_contain_ads">This action might contain ads</string>
 </resources>

@@ -22,7 +22,7 @@ class Navigator(val state: NavigationState) {
      */
     fun goBack() {
         when (state.currentKey) {
-            state.startKey -> error("You cannot go back from the start route")
+            state.rootKey -> error("You cannot go back from the root route")
             state.currentTopLevelKey -> {
                 // We're at the base of the current substack, go back to the previous top level
                 // stack.
@@ -49,7 +49,7 @@ class Navigator(val state: NavigationState) {
      */
     private fun goToTopLevel(key: NavKey) {
         state.topLevelStack.apply {
-            if (key == state.startKey) {
+            if (key == state.rootKey) {
                 // This is the start key. Clear the stack so it's added as the only key.
                 clear()
             } else {
