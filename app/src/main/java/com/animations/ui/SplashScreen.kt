@@ -100,7 +100,7 @@ private fun ProgressSection(progress: () -> Float) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 70.dp),
-        itemSpacing = 12.dp,
+        itemSpacing = 8.dp,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -109,13 +109,11 @@ private fun ProgressSection(progress: () -> Float) {
             Text(
                 text = stringResource(R.string.loading),
                 style = MaterialTheme.typography.bodyLarge,
-                lineHeight = 15.sp,
             )
             val percent by remember { derivedStateOf { (progress() * 100).toInt() } }
             Text(
                 text = "$percent%",
                 style = MaterialTheme.typography.bodyLarge,
-                lineHeight = 15.sp,
             )
         }
 

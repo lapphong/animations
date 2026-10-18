@@ -12,26 +12,36 @@ import com.animations.utils.settings.SharedPrefs
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import timber.log.Timber
 
-class App : Application(), DefaultLifecycleObserver {
+class App : Application() {
     override fun onCreate() {
-        super<Application>.onCreate()
+        super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
         startKoin {
             androidContext(this@App)
             modules(appModule)
-        }.koin
+        }
         AppSettings.init(getKoin().get<SharedPrefs>())
         ShortcutsUtils.createShortcut(this)
         FlutterEngineManager.init(this)
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                owner.lifecycle.removeObserver(this)
+            }
+
+            override fun onDestroy(owner: LifecycleOwner) {
+                super.onDestroy(owner)
+                FlutterEngineManager.destroy()
+            }
+        })
     }
 
-    override fun onDestroy(owner: LifecycleOwner) {
-        super.onDestroy(owner)
-        FlutterEngineManager.destroy()
+    override fun onTerminate() {
+        super.onTerminate()
+        stopKoin()
     }
 }
