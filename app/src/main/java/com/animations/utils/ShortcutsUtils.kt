@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 object ShortcutsUtils {
     private const val ID_DISINTEGRATION = "shortcut_disintegration"
@@ -21,7 +22,7 @@ object ShortcutsUtils {
 
     fun createShortcut(context: Context) {
         val handler = CoroutineExceptionHandler { _, e ->
-            LogUtils.e("createShortcut failed: ${e.toString()}")
+            Timber.e("createShortcut failed: ${e.toString()}")
         }
         CoroutineScope(Dispatchers.IO + handler).launch {
             val shortcuts = listOf(
@@ -51,7 +52,7 @@ object ShortcutsUtils {
                 ),
             )
             ShortcutManagerCompat.setDynamicShortcuts(context, shortcuts)
-            LogUtils.d("createShortcut: ${shortcuts.size} shortcut")
+            Timber.d("createShortcut: ${shortcuts.size} shortcut")
         }
     }
 

@@ -1,6 +1,5 @@
 package com.animations.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.animations.widgets.HeaderView
 import com.carousel_slider.CarouselDefaults
 import com.carousel_slider.CarouselSlider
+import timber.log.Timber
 
 private val covers = listOf(
     "https://picsum.photos/id/1084/600/600",
@@ -76,7 +76,7 @@ fun CarouselSliderDemo(
                         background = darkBg,
                     ),
                     onItemClick = {
-                        Log.d("CoverFlow", "Click ảnh $it, value: ${covers[it]}")
+                        Timber.tag("CoverFlow").d("Click ảnh $it, value: ${covers[it]}")
                     }
                 )
             }

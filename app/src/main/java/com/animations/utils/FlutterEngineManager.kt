@@ -1,16 +1,15 @@
 package com.animations.utils
 
 import android.content.Context
-import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugin.common.MethodChannel
+import timber.log.Timber
 
 object FlutterEngineManager {
     const val ENGINE_ID = "flutter_engine_id"
-    private const val TAG = "FlutterEngineManager"
 
     private const val CHANNEL = "com.animations/flutter"
 
@@ -50,7 +49,7 @@ object FlutterEngineManager {
 
             FlutterEngineCache.getInstance().put(ENGINE_ID, engine)
         } catch (e: Throwable) {
-            Log.e(TAG, "Failed to warm up FlutterEngine", e)
+            Timber.e(e, "Failed to warm up FlutterEngine")
         }
     }
 
@@ -61,7 +60,7 @@ object FlutterEngineManager {
 
     fun sendDataToFlutter(data: String) {
         if (_methodChannel == null) {
-            Log.w(TAG, "MethodChannel is not ready")
+            Timber.w("MethodChannel is not ready")
             return
         }
         _methodChannel?.invokeMethod("updateFromNative", data)

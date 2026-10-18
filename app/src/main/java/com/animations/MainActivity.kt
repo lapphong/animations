@@ -35,8 +35,8 @@ import com.animations.ui.DisintegrationDemo
 import com.animations.ui.HomeScreen
 import com.animations.ui.SplashScreen
 import com.animations.ui.theme.AnimationsTheme
-import com.animations.utils.LogUtils
 import com.animations.utils.settings.AppSettings
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         if (extras != null) {
             AppSettings.openTo = OpenTo.of(extras.getString(OpenTo.KEY)).name
         }
-        LogUtils.d("initArgs: openTo=${AppSettings.openTo}")
+        Timber.d("initArgs: openTo=${AppSettings.openTo}")
     }
 }
 
