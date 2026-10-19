@@ -23,6 +23,6 @@ enum class OpenTo {
 fun OpenTo.navKey(context: Context): NavKey? = when (this) {
     OpenTo.OPEN_TO_DISINTEGRATION -> DisintegrationDemoKey
     OpenTo.OPEN_TO_CAROUSEL_SLIDER -> CarouselSliderDemoKey(context.getString(R.string.from_shortcut))
-    OpenTo.OPEN_TO_FLUTTER_SCREEN -> DisintegrationDemoKey
+    OpenTo.OPEN_TO_FLUTTER_SCREEN -> null
     OpenTo.OPEN_TO_DEFAULT -> null
 }

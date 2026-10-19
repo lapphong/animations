@@ -1,5 +1,6 @@
 package com.animations.utils
 
+import android.app.Application
 import android.content.Context
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterActivityLaunchConfigs
@@ -12,39 +13,26 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
-object FlutterEngineManager {
-    const val ENGINE_ID = "flutter_engine_id"
-
-    private const val CHANNEL = "com.animations/flutter"
-
+class FlutterEngineManager(application: Application) {
     private val _viewReattachSignal = MutableStateFlow(0)
 
     /** Increments whenever the embedded FlutterView needs to be reattached after a full-screen Flutter Activity closes. */
     val viewReattachSignal: StateFlow<Int> = _viewReattachSignal.asStateFlow()
 
+    private val _flutterMessage = MutableStateFlow<String?>(null)
+    val flutterMessage: StateFlow<String?> = _flutterMessage.asStateFlow()
+
     private var _methodChannel: MethodChannel? = null
 
-    private var resultListener: ((String) -> Unit)? = null
-
-    fun setResultListener(listener: (String) -> Unit) {
-        resultListener = listener
-    }
-
-    fun init(context: Context) {
-        if (engine() != null) {
-            return
-        }
-
+    init {
         try {
-            val engine = FlutterEngine(context.applicationContext)
+            val engine = FlutterEngine(application)
             _methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
             _methodChannel?.setMethodCallHandler { call, result ->
                 when (call.method) {
                     "sendDataToNative" -> {
-                        val data = call.argument<String>("counter")
-                        if (data != null) {
-                            resultListener?.invoke(data)
-                        }
+                        val args = call.argument<String>("counter")
+                        args?.let { _flutterMessage.value = it }
                         result.success(true)
                     }
 
@@ -75,8 +63,6 @@ object FlutterEngineManager {
         _methodChannel?.invokeMethod("updateFromNative", data)
     }
 
-    fun isReady(): Boolean = engine() != null
-
     fun engine(): FlutterEngine? = FlutterEngineCache.getInstance().get(ENGINE_ID)
 
     /**
@@ -87,15 +73,20 @@ object FlutterEngineManager {
     fun notifyFlutterScreenClosed() {
         _viewReattachSignal.value++
     }
+
+    companion object {
+        const val ENGINE_ID = "flutter_engine_id"
+        private const val CHANNEL = "com.animations/flutter"
+
+        fun isReady(): Boolean = FlutterEngineCache.getInstance().get(ENGINE_ID) != null
+    }
 }
 
-fun Context.openFlutterScreen(
-    onResult: ((String) -> Unit)? = null,
-) {
+fun Context.openFlutterScreen() {
     if (!FlutterEngineManager.isReady()) {
+        Timber.w("FlutterEngine is not ready; cannot open the Flutter screen")
         return
     }
-    onResult?.let { FlutterEngineManager.setResultListener(onResult) }
 
     val intent = FlutterActivity
         .CachedEngineIntentBuilder(

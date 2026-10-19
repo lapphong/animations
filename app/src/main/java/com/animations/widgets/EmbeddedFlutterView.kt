@@ -1,6 +1,7 @@
 package com.animations.widgets
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -8,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -18,16 +20,18 @@ import com.animations.shared.extensions.roundRadius
 import com.animations.shared.extensions.topBorder
 import com.animations.utils.FlutterEngineManager
 import io.flutter.embedding.android.FlutterView
+import org.koin.compose.koinInject
 
 @Composable
 fun EmbeddedFlutterView(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val engine = remember { FlutterEngineManager.engine() } ?: return
+    val engineManager = koinInject<FlutterEngineManager>()
+    val engine = remember { engineManager.engine() } ?: return
     val flutterView = remember(context) { FlutterView(context) }
     val lifecycleOwner = LocalLifecycleOwner.current
-    val reattachSignal by FlutterEngineManager.viewReattachSignal.collectAsState()
+    val reattachSignal by engineManager.viewReattachSignal.collectAsState()
 
     DisposableEffect(lifecycleOwner, flutterView) {
         val observer = LifecycleEventObserver { _, event ->
@@ -67,6 +71,7 @@ fun EmbeddedFlutterView(
         modifier = modifier
             .topBorder()
             .padding(25.dp)
+            .clip(RoundedCornerShape(20.dp))
             .roundRadius(),
         factory = { flutterView.apply { attachToFlutterEngine(engine) } },
     )

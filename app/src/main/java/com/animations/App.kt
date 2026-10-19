@@ -27,7 +27,6 @@ class App : Application() {
         }
         AppSettings.init(getKoin().get<SharedPrefs>())
         ShortcutsUtils.createShortcut(this)
-        FlutterEngineManager.init(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
                 owner.lifecycle.removeObserver(this)
@@ -35,7 +34,7 @@ class App : Application() {
 
             override fun onDestroy(owner: LifecycleOwner) {
                 super.onDestroy(owner)
-                FlutterEngineManager.destroy()
+                getKoin().get<FlutterEngineManager>().destroy()
             }
         })
     }

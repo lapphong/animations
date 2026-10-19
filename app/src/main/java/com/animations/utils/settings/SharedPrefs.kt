@@ -1,13 +1,14 @@
 package com.animations.utils.settings
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
 class SharedPrefs(
-    context: Context
+    application: Application
 ) {
-    private var _prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private var _prefs: SharedPreferences = application.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun put(key: String, value: String) {
         _prefs.edit { putString(key, value) }

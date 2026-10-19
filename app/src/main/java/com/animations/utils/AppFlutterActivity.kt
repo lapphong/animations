@@ -12,8 +12,11 @@ import com.animations.ui.theme.primary
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.renderer.FlutterUiDisplayListener
+import org.koin.android.ext.android.inject
 
 class AppFlutterActivity : FlutterActivity() {
+    private val engineManager: FlutterEngineManager by inject()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showSpinnerUntilFirstFrame()
@@ -33,7 +36,7 @@ class AppFlutterActivity : FlutterActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // Notify when the user closes the Flutter screen, not when the Activity is destroyed in the background.
-        if (isFinishing) FlutterEngineManager.notifyFlutterScreenClosed()
+        if (isFinishing) engineManager.notifyFlutterScreenClosed()
     }
 
     private fun showSpinnerUntilFirstFrame() {
