@@ -1,7 +1,11 @@
 package com.animations.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +20,7 @@ import com.animations.shared.nav.CarouselSliderDemoKey
 import com.animations.shared.nav.DisintegrationDemoKey
 import com.animations.utils.FlutterEngineManager
 import com.animations.utils.openFlutterScreen
+import com.animations.widgets.EmbeddedFlutterView
 import com.animations.widgets.GradientButton
 import com.animations.widgets.GradientText
 import com.animations.widgets.HeaderView
@@ -28,36 +33,47 @@ fun HomeScreen(
     val context = LocalContext.current
     var counter by remember { mutableStateOf("") }
 
-    Column(
-        modifier.padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeaderView("Animation App", leftIcon = 0)
-        if (counter.isNotBlank()) {
-            GradientText(counter)
-        }
-        Routes.entries.forEach {
-            GradientButton(
-                modifier = Modifier.padding(top = 12.dp),
-                text = it.label,
-                onClick = {
-                    when (it) {
-                        Routes.FLUTTER_COUNTER_DEMO -> {
-                            context.openFlutterScreen { result -> counter = result }
-                        }
+    Column(modifier = modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HeaderView("Animation App", leftIcon = 0)
+            if (counter.isNotBlank()) {
+                GradientText(counter)
+            }
+            Routes.entries.forEach {
+                GradientButton(
+                    modifier = Modifier.padding(top = 12.dp),
+                    text = it.label,
+                    onClick = {
+                        when (it) {
+                            Routes.FLUTTER_COUNTER_DEMO -> {
+                                context.openFlutterScreen { result -> counter = result }
+                            }
 
-                        Routes.SEND_DATA_TO_FLUTTER -> {
-                            FlutterEngineManager.sendDataToFlutter("Data from Android Native, la la")
-                            context.openFlutterScreen { result -> counter = result }
-                        }
+                            Routes.SEND_DATA_TO_FLUTTER -> {
+                                FlutterEngineManager.sendDataToFlutter("Data from Android Native, la la")
+                                context.openFlutterScreen { result -> counter = result }
+                            }
 
-                        else -> {
-                            it.navKey?.let { key -> onNavigate(key) }
+                            else -> {
+                                it.navKey?.let { key -> onNavigate(key) }
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
+
+        EmbeddedFlutterView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+        )
     }
 }
 
