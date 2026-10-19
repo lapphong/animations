@@ -171,3 +171,7 @@ configurations {
     getByName("profileImplementation") {
     }
 }
+
+tasks.named<Delete>("clean") {
+    delete("animsapp")
+}

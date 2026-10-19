@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.Animations" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Animations.Flutter" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

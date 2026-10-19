@@ -113,30 +113,32 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(title: Text(widget.title)),
         body: Center(
-          child: Column(
-            spacing: 16.0,
-            mainAxisAlignment: .center,
-            children: [
-              const Text('You have pushed the button this many times'),
-              InkWell(
-                onTap: sendData,
-                child: Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 16.0,
+              mainAxisAlignment: .center,
+              children: [
+                const Text('You have pushed the button this many times'),
+                InkWell(
+                  onTap: sendData,
+                  child: Text(
+                    '$_counter',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                 ),
-              ),
-              FlutterReactionButton(
-                value: _flutterReactionType,
-                onChanged: (value) {
-                  setState(() {
-                    _flutterReactionType = value;
-                  });
-                },
-              ),
-              if (_nativeMessage != null) ...[
-                Text('From native: $_nativeMessage'),
+                FlutterReactionButton(
+                  value: _flutterReactionType,
+                  onChanged: (value) {
+                    setState(() {
+                      _flutterReactionType = value;
+                    });
+                  },
+                ),
+                if (_nativeMessage != null) ...[
+                  Text('From native: $_nativeMessage'),
+                ],
               ],
-            ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

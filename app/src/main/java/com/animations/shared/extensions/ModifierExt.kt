@@ -2,15 +2,23 @@ package com.animations.shared.extensions
 
 import android.os.SystemClock
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.animations.ui.theme.primary
+import com.animations.ui.theme.trackColor
 
 @Composable
 fun Modifier.shimmerEffect(
@@ -50,3 +58,18 @@ fun Modifier.onClickNotRipple(
             click()
         }
 }
+
+fun Modifier.topBorder(
+    width: Dp = 1.dp,
+    color: Color = trackColor
+) = drawBehind {
+    drawRect(
+        color = color,
+        size = Size(size.width, width.toPx())
+    )
+}
+
+fun Modifier.roundRadius(radius: Dp = 20.dp) = this.border(
+    1.dp,
+    primary, RoundedCornerShape(radius)
+)
