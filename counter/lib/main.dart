@@ -89,13 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+    _notifyNative().ignore();
   }
 
+  String get _message => 'Hello from Flutter, counter: $_counter\nreaction:${_flutterReactionType?.label}';
+
+  Future<void> _notifyNative() => channel.invokeMethod('sendDataToNative', {'counter': _message});
+
   Future<void> sendData() async {
-    await channel.invokeMethod(
-      'sendDataToNative',
-      {'counter': 'Hello from Flutter, counter: $_counter\nreaction:${_flutterReactionType?.label}'},
-    );
+    await _notifyNative();
     if (mounted) {
       SystemNavigator.pop();
     }
@@ -119,19 +121,14 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: .center,
               children: [
                 const Text('You have pushed the button this many times'),
-                InkWell(
-                  onTap: sendData,
-                  child: Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ),
+                Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
                 FlutterReactionButton(
                   value: _flutterReactionType,
                   onChanged: (value) {
                     setState(() {
                       _flutterReactionType = value;
                     });
+                    _notifyNative().ignore();
                   },
                 ),
                 if (_nativeMessage != null) ...[
