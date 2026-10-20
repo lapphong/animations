@@ -19,6 +19,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.animations.shared.extensions.roundRadius
 import com.animations.shared.extensions.topBorder
 import com.animations.utils.FlutterEngineManager
+import io.flutter.embedding.android.FlutterTextureView
 import io.flutter.embedding.android.FlutterView
 import org.koin.compose.koinInject
 
@@ -29,7 +30,7 @@ fun EmbeddedFlutterView(
     val context = LocalContext.current
     val engineManager = koinInject<FlutterEngineManager>()
     val engine = remember { engineManager.engine() } ?: return
-    val flutterView = remember(context) { FlutterView(context) }
+    val flutterView = remember(context) { FlutterView(context, FlutterTextureView(context)) }
     val lifecycleOwner = LocalLifecycleOwner.current
     val reattachSignal by engineManager.viewReattachSignal.collectAsState()
 
