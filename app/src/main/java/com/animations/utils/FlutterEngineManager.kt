@@ -55,12 +55,15 @@ class FlutterEngineManager(application: Application) {
         _methodChannel = null
     }
 
-    fun sendDataToFlutter(data: String) {
+    fun sendDataToFlutter(
+        arguments: Any?,
+        method: String = "updateFromNative",
+    ) {
         if (_methodChannel == null) {
             Timber.w("MethodChannel is not ready")
             return
         }
-        _methodChannel?.invokeMethod("updateFromNative", data)
+        _methodChannel?.invokeMethod(method, arguments)
     }
 
     fun engine(): FlutterEngine? = FlutterEngineCache.getInstance().get(ENGINE_ID)

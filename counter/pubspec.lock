@@ -178,10 +178,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_reactions
-      sha256: ab393699cd16d7aba672686546f44ea742445f77f8fa87bf92361f23b3f23bff
+      sha256: b6dc158480d83b580750818c2fb7de082161a4cef6049ff9a1497a65c2ae41c4
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
