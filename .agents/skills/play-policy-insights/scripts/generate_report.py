@@ -44,7 +44,7 @@ def run_scraper(package_name, output_dir):
     # Save to temp for consistency with existing report logic if needed
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, "play_store_declaration.json")
-    with open(out_path, "w") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
       json.dump(result, f, indent=4, sort_keys=True)
 
     return result
@@ -239,7 +239,7 @@ def load_json(file_path):
   """Loads JSON from a file if it exists."""
   if os.path.exists(file_path):
     try:
-      with open(file_path, "r") as f:
+      with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
         return json.load(f)
     except Exception as e:
       print(f"Warning: Failed to load {file_path}: {e}", file=sys.stderr)
@@ -253,6 +253,9 @@ def aggregate_findings(temp_dir, taxonomy):
   """
   play_store_info = (
       load_json(os.path.join(temp_dir, "play_store_info.json")) or {}
+  )
+  manifest_details = (
+      load_json(os.path.join(temp_dir, "manifest_details.json")) or {}
   )
 
   aggregated_findings_path = os.path.join(temp_dir, "aggregated_findings.json")
@@ -621,10 +624,17 @@ def aggregate_findings(temp_dir, taxonomy):
     )
 
   # 9. Final Report Construction
+  pkg_name = (
+      play_store_info.get("package_name")
+      or manifest_details.get("package_name")
+  )
+  if not pkg_name or pkg_name == "unknown":
+    pkg_name = "unknown"
+
   report = {
       "overall_compliance": overall_compliance,
       "summary": " ".join(summary_parts),
-      "package_name": play_store_info.get("package_name", "unknown"),
+      "package_name": pkg_name,
       "is_published": is_published,
       "identified_risks": identified_risks,
       "data_safety_comparison": {"matches": matches, "mismatches": mismatches},
@@ -688,7 +698,7 @@ def main():
   if not play_store_info and package_name:
     play_store_info = run_scraper(package_name, temp_dir)
     # Cache it for report reuse
-    with open(play_store_info_path, "w") as f:
+    with open(play_store_info_path, "w", encoding="utf-8") as f:
       json.dump(play_store_info, f, indent=4, sort_keys=True)
 
   report_data = aggregate_findings(temp_dir, taxonomy)
@@ -701,7 +711,7 @@ def main():
     sys.exit(1)
 
   try:
-    with open(template_path, "r") as f:
+    with open(template_path, "r", encoding="utf-8") as f:
       content = f.read()
   except Exception as e:
     print(f"Error reading template: {e}", file=sys.stderr)
@@ -723,7 +733,13 @@ def main():
   }
   compliance_ui = status_map.get(compliance_raw, "🟡 Needs Review")
 
-  app_id = report_data.get("package_name") or "Unknown App"
+  app_id = report_data.get("package_name")
+  if not app_id or app_id == "unknown":
+    app_id = (
+        play_store_info.get("package_name")
+        or manifest_details.get("package_name")
+        or "Unknown App"
+    )
 
   findings_content = ""
   if not violations:
@@ -832,11 +848,11 @@ def main():
 
   content = render_template(content, template_context)
 
-  with open(output_path, "w") as f:
+  with open(output_path, "w", encoding="utf-8") as f:
     f.write(content)
 
   json_output_path = output_path.replace(".md", ".json")
-  with open(json_output_path, "w") as f:
+  with open(json_output_path, "w", encoding="utf-8") as f:
     json.dump(
         {
             "metadata": {
