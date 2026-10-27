@@ -1,11 +1,7 @@
 package com.animations
 
 import android.app.Application
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.animations.di.appModule
-import com.animations.utils.FlutterEngineManager
 import com.animations.utils.ShortcutsUtils
 import com.animations.utils.settings.AppSettings
 import com.animations.utils.settings.SharedPrefs
@@ -20,6 +16,7 @@ class App : Application() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            setupStrictMode()
         }
         startKoin {
             androidContext(this@App)
@@ -27,16 +24,23 @@ class App : Application() {
         }
         AppSettings.init(getKoin().get<SharedPrefs>())
         ShortcutsUtils.createShortcut(this)
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onStart(owner: LifecycleOwner) {
-                owner.lifecycle.removeObserver(this)
-            }
+    }
 
-            override fun onDestroy(owner: LifecycleOwner) {
-                super.onDestroy(owner)
-                getKoin().get<FlutterEngineManager>().destroy()
-            }
-        })
+    private fun setupStrictMode() {
+//        StrictMode.setThreadPolicy(
+//            StrictMode.ThreadPolicy.Builder()
+//                .detectAll()
+//                .penaltyLog()
+//                .penaltyDialog()
+//                .build()
+//        )
+//
+//        StrictMode.setVmPolicy(
+//            StrictMode.VmPolicy.Builder()
+//                .detectAll()
+//                .penaltyLog()
+//                .build()
+//        )
     }
 
     override fun onTerminate() {

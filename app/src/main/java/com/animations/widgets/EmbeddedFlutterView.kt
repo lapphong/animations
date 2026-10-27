@@ -29,7 +29,7 @@ fun EmbeddedFlutterView(
 ) {
     val context = LocalContext.current
     val engineManager = koinInject<FlutterEngineManager>()
-    val engine = remember { engineManager.engine() } ?: return
+    val engine = remember { FlutterEngineManager.engine() } ?: return
     val flutterView = remember(context) { FlutterView(context, FlutterTextureView(context)) }
     val lifecycleOwner = LocalLifecycleOwner.current
     val reattachSignal by engineManager.viewReattachSignal.collectAsState()

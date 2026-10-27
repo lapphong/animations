@@ -46,8 +46,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
-    onNavigate: (NavKey) -> Unit = {}
+    onNavigate: (NavKey) -> Unit
 ) {
     val context = LocalContext.current
     val engineManager = koinInject<FlutterEngineManager>()
@@ -66,16 +65,18 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         delay(2_000.milliseconds)
         showIdleLottie = true
+        delay(4_000.milliseconds)
+        showIdleLottie = false
     }
 
     CenterColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         itemSpacing = 20.dp
     ) {
         CenterColumn(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 20.dp, end = 20.dp)
+                .padding(horizontal = 20.dp)
         ) {
             HeaderView("Animation App", leftIcon = 0)
             counter?.takeIf { it.isNotBlank() }?.let { GradientText(it) }

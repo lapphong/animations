@@ -20,7 +20,7 @@ class Navigator(val state: NavigationState) {
     /**
      * Go back to the previous navigation key.
      */
-    fun goBack() {
+    fun pop() {
         when (state.currentKey) {
             state.rootKey -> error("You cannot go back from the root route")
             state.currentTopLevelKey -> {

@@ -79,7 +79,7 @@ fun AnimationApp() {
             SplashScreen(
                 onFinished = {
                     val openTo = OpenTo.of(AppSettings.openTo).navKey(context)
-                    navigator.goBack()
+                    navigator.pop()
                     openTo?.let(navigator::navigate)
                 }
             )
@@ -92,7 +92,7 @@ fun AnimationApp() {
         ) {
             DisintegrationDemo(
                 goToCarouselSlider = { navigator.navigate(CarouselSliderDemoKey(it)) },
-                onBackPressed = { navigator.goBack() }
+                onBackPressed = { navigator.pop() }
             )
         }
         entry<CarouselSliderDemoKey>(
@@ -100,7 +100,7 @@ fun AnimationApp() {
         ) { args ->
             CarouselSliderDemo(
                 title = args.title,
-                onBackPressed = { navigator.goBack() }
+                onBackPressed = { navigator.pop() }
             )
         }
     }
@@ -111,7 +111,7 @@ fun AnimationApp() {
         NavDisplay(
             modifier = Modifier.padding(innerPadding),
             entries = navigationState.toEntries(entryProvider),
-            onBack = navigator::goBack,
+            onBack = navigator::pop,
             transitionSpec = {
                 enterTransition(SlideDirection.RIGHT)
             },
