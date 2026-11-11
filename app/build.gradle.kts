@@ -60,7 +60,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
-            isProfileable = true // Enable performance profiling for release builds
+            // isProfileable = true // Enable performance profiling for release builds
             resValue("string", "app_name", "animsapp")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -157,7 +157,6 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
 
     // Koin

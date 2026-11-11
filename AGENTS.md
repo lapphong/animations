@@ -19,7 +19,7 @@ app/                      # :app — UI, navigation, DI, Flutter embedding
   src/main/java/com/animations/
     ui/                   # Splash, Home, demo screens + theme/
     widgets/              # AppImage/AppIcon/AppLottie, Center*, buttons, EmbeddedFlutterView
-    shared/nav/           # NavKeys, Navigator, NavigationState, transitions
+    shared/nav/           # Dest keys, backstack helpers, transitions
     shared/extensions/    # Modifier/draw/gradient helpers
     models/               # OpenTo enum + shortcut-to-route mapping
     di/                   # Koin module

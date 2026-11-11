@@ -14,7 +14,6 @@ composeBom = "2024.09.00"
 appcompat = "1.7.1"
 material = "1.13.0"
 nav3Core = "1.1.5"
-lifecycleViewmodelNav3 = "2.10.0"
 kotlinSerialization = "2.4.10"
 kotlinxSerializationCore = "1.9.0"
 timber = "5.0.1"
@@ -44,7 +43,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
-androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }

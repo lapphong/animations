@@ -26,11 +26,9 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.NavKey
 import com.animations.R
 import com.animations.models.OpenTo
-import com.animations.shared.nav.CarouselSliderDemoKey
-import com.animations.shared.nav.DisintegrationDemoKey
+import com.animations.shared.nav.Dest
 import com.animations.utils.FlutterEngineManager
 import com.animations.utils.openFlutterScreen
 import com.animations.utils.settings.AppSettings
@@ -46,7 +44,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun HomeScreen(
-    onNavigate: (NavKey) -> Unit
+    onNavigate: (Dest) -> Unit
 ) {
     val context = LocalContext.current
     val engineManager = koinInject<FlutterEngineManager>()
@@ -110,7 +108,7 @@ fun HomeScreen(
                                     }
 
                                     else -> {
-                                        route.navKey?.let { key -> onNavigate(key) }
+                                        route.dest?.let(onNavigate)
                                     }
                                 }
                             }
@@ -162,10 +160,10 @@ internal fun LazyListLayoutInfo.onScreenItem(index: Int): LazyListItemInfo? =
         it.index == index && it.offset + it.size > 0 && it.offset < viewportEndOffset
     }
 
-enum class Routes(val navKey: NavKey?) {
+enum class Routes(val dest: Dest?) {
     FLUTTER_COUNTER_DEMO(null),
-    DISINTEGRATION_DEMO(DisintegrationDemoKey),
-    CAROUSEL_SLIDER_DEMO(CarouselSliderDemoKey("Data from HomeScreen")),
+    DISINTEGRATION_DEMO(Dest.Disintegration),
+    CAROUSEL_SLIDER_DEMO(Dest.CarouselSlider("Data from HomeScreen")),
     SEND_DATA_TO_FLUTTER(null);
 
     val label: String
