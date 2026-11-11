@@ -4,8 +4,8 @@ Jetpack Compose demo app (`:app`) showing two animation libraries and an embedde
 
 ## Stack
 
-- AGP 9.0.1 / Gradle 9.2.1; compileSdk & targetSdk 37, minSdk 26; Java 11 bytecode with JDK 21.
-- Kotlin is compiled by AGP 9's built-in Kotlin support — no `org.jetbrains.kotlin.android` plugin is applied.
+- AGP 9.2.1 / Gradle 9.6.1; compileSdk & targetSdk 37, minSdk 26; Java 21 bytecode with JDK 21.
+- Kotlin is compiled by AGP 9's built-in Kotlin (2.4.10) — no `org.jetbrains.kotlin.android` plugin is applied.
 - Compose BOM 2024.09.00 + Material 3; Navigation 3 1.1.5 (`NavDisplay`; navigation-compose is not used).
 - Koin 4.1.1 (`koinInject`, `singleOf`), kotlinx.serialization 1.9.0 for `NavKey` routes.
 - Timber 5.0.1 for logs, Glide Compose 1.0.0-beta09 for images, Lottie Compose 6.7.1 for animations.
