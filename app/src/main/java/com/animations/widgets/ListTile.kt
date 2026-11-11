@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.animations.ui.theme.Dimens
 import com.disintegration.DisintegrationEffect
 import com.disintegration.rememberDisintegrationState
 import kotlinx.coroutines.launch
@@ -39,7 +40,7 @@ fun ListTile(
     val appearScale = remember { Animatable(1f) }
     val appearAlpha = remember { Animatable(1f) }
 
-    DisintegrationEffect(modifier.padding(vertical = 10.dp), state = state) {
+    DisintegrationEffect(modifier.padding(vertical = Dimens.medium), state = state) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -51,7 +52,7 @@ fun ListTile(
                     shape = RoundedCornerShape(5.dp)
                 )
                 .background(Color.Red)
-                .padding(10.dp)
+                .padding(Dimens.medium)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

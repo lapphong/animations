@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.animations.ui.theme.Dimens
 import com.animations.widgets.GradientButton
 import com.animations.widgets.HeaderView
 import com.animations.widgets.ListTile
@@ -72,7 +73,7 @@ fun DisintegrationDemo(
         modifier = modifier
             .fillMaxSize()
             .background(Brush.verticalGradient(listOf(Color(0xFF1A1A22), Color(0xFF0B0B0F))))
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = Dimens.large),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderView(
@@ -81,8 +82,8 @@ fun DisintegrationDemo(
         )
         GradientButton(
             modifier = Modifier
-                .widthIn(max = 250.dp)
-                .padding(vertical = 8.dp),
+                .widthIn(max = 270.dp)
+                .padding(vertical = Dimens.small),
             text = "Open CarouselSlider Demo",
             onClick = { goToCarouselSlider("Data from DisintegrationDemo") },
         )
@@ -93,7 +94,7 @@ fun DisintegrationDemo(
             color = Color.Gray,
             style = MaterialTheme.typography.bodyMedium,
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.large))
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -125,7 +126,7 @@ fun DisintegrationDemo(
                             durationMillis = 300
                         }
                     )
-                    .padding(horizontal = 12.dp)
+                    .padding(horizontal = Dimens.large)
             ) {
                 items(
                     items = items,

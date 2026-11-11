@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.animations.R
+import com.animations.ui.theme.Dimens
 import com.animations.widgets.AppImage
 import com.animations.widgets.CenterBox
 import com.animations.widgets.CenterColumn
@@ -92,7 +93,7 @@ private fun ProgressSection(progress: () -> Float) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 70.dp),
-        itemSpacing = 8.dp,
+        itemSpacing = Dimens.small,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

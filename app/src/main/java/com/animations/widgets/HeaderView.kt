@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.animations.R
 import com.animations.shared.extensions.onClickNotRipple
+import com.animations.ui.theme.Dimens
 
 @Composable
 fun HeaderView(
@@ -71,7 +72,7 @@ fun HeaderView(
     val rootModifier = modifier
         .fillMaxWidth()
         .statusBarsPadding()
-        .padding(8.dp)
+        .padding(Dimens.small)
         .heightIn(min = 30.dp)
 
     if (centerTitle) {
@@ -95,7 +96,7 @@ fun HeaderView(
 
             CenterRow(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                itemSpacing = 12.dp,
+                itemSpacing = Dimens.large,
             ) {
                 rightContent()
             }
@@ -103,7 +104,7 @@ fun HeaderView(
     } else {
         CenterRow(
             modifier = rootModifier,
-            itemSpacing = 8.dp,
+            itemSpacing = Dimens.small,
         ) {
             if (leftIcon != 0) {
                 BackIcon(res = leftIcon, onClick = onLeftClick)
@@ -111,7 +112,7 @@ fun HeaderView(
 
             titleContent()
 
-            CenterRow(itemSpacing = 12.dp) {
+            CenterRow(itemSpacing = Dimens.large) {
                 rightContent()
             }
         }

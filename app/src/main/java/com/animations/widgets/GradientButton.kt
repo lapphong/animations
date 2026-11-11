@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.animations.shared.extensions.shimmerEffect
+import com.animations.ui.theme.Dimens
 
 @Composable
 fun GradientButton(
@@ -45,7 +46,7 @@ fun GradientButton(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 10.dp),
+            modifier = Modifier.padding(Dimens.medium),
             text = text,
             fontSize = 18.sp,
             color = Color.White,
@@ -58,7 +59,7 @@ fun GradientButton(
 @Composable
 fun CustomGradientButtonPreview() {
     GradientButton(
-        modifier = Modifier.padding(10.dp),
+        modifier = Modifier.padding(Dimens.medium),
         onClick = { },
     )
 }

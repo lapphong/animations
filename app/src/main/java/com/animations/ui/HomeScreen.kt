@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.animations.R
 import com.animations.models.OpenTo
 import com.animations.shared.nav.Dest
+import com.animations.ui.theme.Dimens
 import com.animations.utils.FlutterEngineManager
 import com.animations.utils.openFlutterScreen
 import com.animations.utils.settings.AppSettings
@@ -69,12 +70,12 @@ fun HomeScreen(
 
     CenterColumn(
         modifier = Modifier.fillMaxSize(),
-        itemSpacing = 20.dp
+        itemSpacing = Dimens.xxLarge
     ) {
         CenterColumn(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = Dimens.xxLarge)
         ) {
             HeaderView("Animation App", leftIcon = 0)
             counter?.takeIf { it.isNotBlank() }?.let { GradientText(it) }
@@ -86,8 +87,8 @@ fun HomeScreen(
             ) {
                 LazyColumn(
                     state = listState,
-                    contentPadding = PaddingValues(top = BUTTON_SPACING),
-                    verticalArrangement = Arrangement.spacedBy(BUTTON_SPACING),
+                    contentPadding = PaddingValues(top = Dimens.large),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.large),
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     itemsIndexed(
@@ -152,8 +153,6 @@ fun HomeScreen(
         )
     }
 }
-
-private val BUTTON_SPACING = 12.dp
 
 internal fun LazyListLayoutInfo.onScreenItem(index: Int): LazyListItemInfo? =
     visibleItemsInfo.firstOrNull {
